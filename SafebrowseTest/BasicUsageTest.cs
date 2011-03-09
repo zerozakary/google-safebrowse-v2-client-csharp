@@ -71,12 +71,12 @@ namespace SafebrowseTest
                 //Work upward to find the directory with the cached lists (SafeBrowsingCacheList[0-4].bin) so that we have valid data when we start up
                 string cwd = System.IO.Directory.GetCurrentDirectory();
                 System.IO.DirectoryInfo dir = System.IO.Directory.GetParent(cwd);
-                while (!dir.Name.Equals("SafebrowseCSharp"))
+                while (!dir.GetFiles().Any(file => file.Name.Equals("SafeBrowsingCacheList0.bin")))
                 {
+                    Assert.IsNotNull(dir.Parent, "Failed to find SafeBrowsingCacheList*.bin files which are expected to be in the solution root directory. Unit tests require cached data.");
                     dir = dir.Parent;
                 }
                 cacheBaseDir = dir.FullName;
-                Assert.IsTrue(dir.GetFiles().Any(file => file.Name.Equals("SafeBrowsingCacheList0.bin")), "Expected solution directory to contain SafeBrowsingCacheList*.bin files. Unit tests require cached data.");
             }
 
             Assert.IsFalse(string.IsNullOrEmpty(Properties.Settings.Default.SafebrowseV2ApiKey),
