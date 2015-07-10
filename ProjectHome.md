@@ -1,0 +1,1 @@
+This is a C# library (DLL) that implements the Google Safebrowse API v2 (http://code.google.com/p/google-safe-browsing/).
